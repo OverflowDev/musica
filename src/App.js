@@ -10,9 +10,9 @@ function App() {
   return (
     <div className="text-gray-400 font-quicksand ">
       <Router>
-        <div className="px-6 md:px-10">
           <Navbar />
           
+        <div className="px-6 md:px-10">
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/collection" element={<Collection />} />

@@ -9,14 +9,14 @@ function Navbar() {
   const closeMenu = () => setOpen(false)
 
   return (
-    <div className='sticky top-0  z-50'>
-      <nav className='flex items-center gap-x-20 py-3 bg-main'>
+    <div className='sticky top-0 z-10 '>
+      <nav className='flex items-center gap-x-20 py-3 px-6 md:px-10 bg-main'>
 
-        <div className=' md:w-auto w-full flex items-center justify-between'>
+        <div className=' z-50 lg:w-auto w-full flex items-center justify-between'>
           <div className='flex items-center'>
             {/* Menu button amd Logo */}
             <button 
-              className='mr-8 md:hidden'
+              className='mr-8 lg:hidden'
               onClick={() => setOpen(!open)}
             >
               {open ? 
@@ -60,7 +60,7 @@ function Navbar() {
 
         {/* Mobile Screen  */}
         <ul
-          className={`bg-dark-alt absolute bottom-0 w-full h-screen py-36 px-12 space-y-12 delay-200 duration-500 ${open ? 'left-0' : 'left-[-100%]'}`}
+          className={`bg-dark-alt absolute top-0 w-full flex flex-col h-screen py-36 px-12 space-y-12 delay-200 duration-500 z-10 lg:hidden ${open ? 'left-0' : 'left-[-100%]'}`}
         >
           <Link to='/' onClick={closeMenu} className='flex items-center gap-x-6 font-semibold tracking-wider text-lg hover:opacity-70'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-secondary ">
