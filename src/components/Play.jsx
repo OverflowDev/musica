@@ -99,6 +99,7 @@ function Play() {
         <div className="bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-1 ">
             <div className=' flex items-center justify-around'>
                 {/* Image  */}
+                
                 <div className='flex items-center space-x-4 text-light'>
                     <img src={release2} alt="release" className='h-16 object-cover w-16 rounded-2xl' />
                     <div>
@@ -107,7 +108,7 @@ function Play() {
                     </div>
                 </div>
                 {/* Play  */}
-                <div className='flex items-center justify-center md:gap-x-12 gap-4'>
+                <div className='flex items-center justify-center md:gap-x-12 gap-4 '>
                     {/* Audio  */}
                     <audio 
                         ref={audioPlayer}
@@ -156,7 +157,7 @@ function Play() {
                 </div>
                 {/* Volume  */}
                 <div className='hidden lg:flex items-center gap-2'>
-                    <button className='flex items-center' onClick={() => setMute(!mute)}>
+                    <button className='flex items-center transition delay-150 duration-200' onClick={() => setMute(!mute)}>
                         {mute ? 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                                 <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
