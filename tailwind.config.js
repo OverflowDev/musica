@@ -11,6 +11,9 @@ module.exports = {
   theme: {
     extend: {
 
+      width: {
+        'seek-before-width': '0',
+      },
       colors: {
         ...defaultColors,
         'main': '#1D2123',

@@ -112,7 +112,7 @@ function Home() {
         </div>
 
         <div className='mt-8 md:px-28'>
-            <Release />
+            {/* <Release /> */}
         </div>
     </div>
   )
