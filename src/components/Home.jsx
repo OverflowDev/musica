@@ -51,7 +51,7 @@ function Home() {
                     </div>
                 </div>
                 {/* Chart  */}
-                <div className='flex flex-col space-y-4 md:mt-0 mt-3'>
+                <div className='flex flex-col mb-20 space-y-4 md:mt-0 mt-3'>
                     <h1 className='text-light tracking-wider font-bold'>Top Charts</h1>
 
                     <div className='bg-dark-alt md:w-5/6 md:h-24 rounded-2xl md:px-4 px-2'>

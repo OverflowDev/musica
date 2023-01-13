@@ -4,7 +4,17 @@ import 'rc-slider/assets/index.css';
 
 import release2 from '../assets/release2.svg'
 
+import lauren from '../assets/audio/lauren.mp3'
+import neon from '../assets/audio/neon.mp3'
+import mavrick from '../assets/audio/mavrick.mp3'
+
+const playlist = [lauren, neon, mavrick]
+
 function Play() {
+
+    const [index, setIndex] = useState(0)
+    const [currentSong] = useState(playlist[index])
+
     // states 
     const [isPlaying, setIsPlaying] = useState(false)
 
@@ -16,7 +26,9 @@ function Play() {
 
     // References 
     const audioPlayer = useRef()
-    // const progressBar = useRef()
+    const progressBar = useRef()
+    const animationRef = useRef()
+    // const volumeBar = useRef()
 
     // const loadedMetadata = audioPlayer?.current?.loadedmetadata
     // const ready = audioPlayer?.current?.readyState
@@ -25,22 +37,23 @@ function Play() {
     useEffect(() => {
 
         if(audioPlayer){
-            audioPlayer.current.volume = volume / 100;
+            audioPlayer.current.volume = volume / 100  ;
         }
 
-        if(isPlaying){
-            setInterval(() => {
-                const _duration = Math.floor(audioPlayer?.current?.duration)
-                const _elapsed = Math.floor(audioPlayer?.current?.currentTime)
+        // if(isPlaying){
+        //     // setInterval(() => {
+        //         const _duration = Math.floor(audioPlayer?.current?.duration)
+        //         const _elapsed = Math.floor(audioPlayer?.current?.currentTime)
         
-                setDuration(_duration)
-                setElapsed(_elapsed)
-            }, 100)
-        }
-        // const seconds = Math.floor(audioPlayer.current.duration)
-        // setDuration(seconds)
-        // progressBar.current.max = seconds
-    }, [volume, isPlaying])
+        //         setDuration(_duration)
+        //         setElapsed(_elapsed)
+        //     // }, 100)
+        // }
+        const seconds = Math.floor(audioPlayer.current.duration)
+        setDuration(seconds)
+        progressBar.current.max = seconds
+
+    }, [volume, audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
 
     // Calculate time funcion 
     const calculateTime = (secs) => {
@@ -63,26 +76,61 @@ function Play() {
 
         if(!prev){
             audioPlayer.current.play()
+            animationRef.current = requestAnimationFrame(whilePlaying)
         } else {
             audioPlayer.current.pause()
+            cancelAnimationFrame(animationRef.current)
         }
     }
 
     // Forward and Backward 
     const toggleForward = () => {
         audioPlayer.current.currentTime += 10;
-    }
 
+    }
     const toggleBackward = () => {
         audioPlayer.current.currentTime -= 10;
+ 
+    }
+
+    const toggleSkipForward = () => {
+        if(index >= playlist.length - 1) {
+            setIndex(0)
+            audioPlayer.current.src = playlist[0]
+            audioPlayer.current.play()
+        } else {
+            setIndex(prev => prev + 1)
+            audioPlayer.current.src = playlist[index + 1]
+            audioPlayer.current.play()
+        }
+    }
+
+    const toggleSkipBackward = () => {
+        if(index > 0) {
+            setIndex(prev => prev - 1)
+            audioPlayer.current.src = playlist[index -1]
+            audioPlayer.current.play()
+        }
     }
 
     // onChange 
     const changeVolume = (e) => {
+        // audioPlayer.volume = volumeBar.current.value
+        // setVolume(volumeBar.current.value)
         setVolume(e.target.value)
+  
     }
+
     const changeProgress = (e) => {
-        
+        audioPlayer.current.currentTime = progressBar.current.value
+        setElapsed(progressBar.current.value)
+    }
+    
+    // WhilePlaying 
+    const whilePlaying = () => {
+        progressBar.current.value = audioPlayer.current.currentTime
+        setElapsed(progressBar.current.value)
+        animationRef.current = requestAnimationFrame(whilePlaying) 
     }
 
     
@@ -97,10 +145,10 @@ function Play() {
   return (
     <div className='fixed bottom-0'>
         <div className="bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-1 ">
-            <div className=' flex items-center justify-around'>
+            <div className=' flex flex-nowrap items-center justify-around'>
                 {/* Image  */}
                 
-                <div className='flex items-center space-x-4 text-light'>
+                <div className='flex flex-start items-center space-x-4 text-light'>
                     <img src={release2} alt="release" className='h-16 object-cover w-16 rounded-2xl' />
                     <div>
                         <h1 className='text-md font-semibold tracking-wide'>Seasons In</h1>
@@ -108,11 +156,12 @@ function Play() {
                     </div>
                 </div>
                 {/* Play  */}
-                <div className='flex items-center justify-center md:gap-x-12 gap-4 '>
+                <div className='flex self-center items-center justify-center md:gap-x-12 gap-4 '>
                     {/* Audio  */}
                     <audio 
                         ref={audioPlayer}
-                        src="https://www.ceenaija.com/wp-content/uploads/2019/07/Lauren-Daigle-Rescue-CeeNaija.com_.mp3" 
+                        // src="https://www.ceenaija.com/wp-content/uploads/2019/07/Lauren-Daigle-Rescue-CeeNaija.com_.mp3" 
+                        src={currentSong} 
                         preload='metadata'
                         muted={mute}
                     ></audio>
@@ -125,7 +174,12 @@ function Play() {
                         </svg>
                     </button>
                     {/* Backward  */}
-                    <button className='' onClick={toggleBackward}>
+                    {/* <button className='' onClick={toggleBackward}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                            <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
+                        </svg>
+                    </button> */}
+                    <button className='' onClick={toggleSkipBackward}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                             <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
                         </svg>
@@ -143,7 +197,12 @@ function Play() {
                         }
                     </button>
                     {/* Forward  */}
-                    <button className='' onClick={toggleForward}>
+                    {/* <button className='' onClick={toggleForward}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                            <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
+                        </svg>
+                    </button> */}
+                    <button className='' onClick={toggleSkipForward}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                             <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
                         </svg>
@@ -176,11 +235,13 @@ function Play() {
                     </button>
                     <div className='flex items-center border-3 w-24'>
                         <input 
+                            // ref={volumeBar}
                             type="range" 
-                            className='h-1 rounded-full outline-none'
+                            className='h-1 accent-light rounded-full outline-none'
                             // min={0} 
                             // max={100} 
-                            // value={volume}
+                            value={volume}
+                            // defaultValue={0}
                             onChange={changeVolume} 
                         />
                     </div>
@@ -191,33 +252,21 @@ function Play() {
                     <div className='text-sm'>
                         {calculateTime(elapsed)}
                     </div>
-                    {/* <Slider
-                        ref={progressBar}
-                        min={0}
-                        max={duration}
-                        value={elapsed}
-                        // onChange={(val) => audioPlayer.current.currentTime = +val}
-                        onChange={changeRange}
-                        railStyle={{ background: 'rgb(239, 238, 224)' }}
-                        trackStyle={{ background: 'rgb(250, 205, 102)' }}
-                        handleStyle={{ 
-                            border: '2px solid rgb(250, 205, 102)',
-                            background: 'rgb(250, 205, 102)',
-                            boxShadow: 'none',
-                            opacity: 1,
-                        }}
-                    /> */}
+
                     <div className='flex items-center'>
                         <input 
+                            ref={progressBar}
                             type="range" 
-                            className='w-96 h-1 bg-light rounded-md accent-secondary outline-none'
-                            value={elapsed}
-                            max={duration}
+                            className='w-96 h-1 accent-secondary rounded-md  outline-none'
+                            // value={elapsed}
+                            // min={0}
+                            // max={duration}  
+                            defaultValue={0}
                             onChange={changeProgress}
                         />
                     </div>
                     <div className='text-sm'>
-                        {calculateTime(duration - elapsed)}
+                        {calculateTime(duration)}
                     </div>
                 </div>
             </div>
