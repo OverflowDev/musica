@@ -7,3 +7,21 @@
 body {
     @apply bg-main
 }
+
+/* Chrome  */
+/* .test::-webkit-slider-runnable-track {
+    @apply w-96 h-1 bg-light border-none rounded-md
+} */
+
+/* .test::-webkit-slider-thumb {
+    @apply appearance-none border-none h-2 w-2 rounded-full bg-secondary
+} */
+
+/* Firefox  */
+/* .test::-moz-range-track {
+    @apply w-96 h-1 bg-light border-none rounded-md
+} */
+/* .test::-moz-range-thumb {
+    @apply appearance-none border-none h-2 w-2 rounded-full bg-secondary
+} */
+

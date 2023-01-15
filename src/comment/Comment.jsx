@@ -12,7 +12,7 @@ import mavrick from '../assets/audio/mavrick.mp3'
 
 // const playlist = [lauren, neon, mavrick]
 
-function Play() {
+function Comment() {
 
     const [songs, setSongs] = useState(playlist)
     // const [index, setIndex] = useState(0)
@@ -36,6 +36,7 @@ function Play() {
     const audioPlayer = useRef()
     const progressBar = useRef()
     const animationRef = useRef()
+    // const volumeBar = useRef()
 
 
     // useEffects 
@@ -45,12 +46,29 @@ function Play() {
             audioPlayer.current.volume = volume / 100  ;
         }
 
+        // if(isPlaying){
+        //     setInterval(() => {
+        //         const _duration = Math.floor(audioPlayer?.current?.duration)
+        //         const _elapsed = Math.floor(audioPlayer?.current?.currentTime)
+        
+        //         setDuration(_duration)
+        //         setElapsed(_elapsed)
+        //     }, 100)
+        // }
         const seconds = Math.floor(audioPlayer.current.duration)
         setDuration(seconds)
         progressBar.current.max = seconds
 
     }, [volume, audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
     // }, [volume, isPlaying])
+
+    
+    // Set the pprogress to start when the audio finish 
+    // useEffect(() => {
+    //   if(elapsed === duration) {
+    //     togglePlayPause()
+    //   }
+    // }, [elapsed])
 
     // Calculate time funcion 
     const calculateTime = (secs) => {
@@ -68,14 +86,16 @@ function Play() {
 
     // Toggle Play and Pause    
     const togglePlayPause = () => {
+        // const prev = isPlaying
         setIsPlaying(!isPlaying)
-    }
 
-    // WhilePlaying 
-    const whilePlaying = () => {
-        progressBar.current.value = audioPlayer.current.currentTime
-        setElapsed(progressBar.current.value)
-        animationRef.current = requestAnimationFrame(whilePlaying) 
+        // if(!prev){
+        //     audioPlayer.current.play()
+        //     animationRef.current = requestAnimationFrame(whilePlaying)
+        // } else {
+        //     audioPlayer.current.pause()
+        //     cancelAnimationFrame(animationRef.current)
+        // }
     }
 
     useEffect(() => {
@@ -86,18 +106,65 @@ function Play() {
             audioPlayer.current.pause()
             cancelAnimationFrame(animationRef.current)
         }
-    })
+    }, [isPlaying, currentSong])
 
-    // Range / SLider 
+
+    // WhilePlaying 
+    const whilePlaying = () => {
+        progressBar.current.value = audioPlayer.current.currentTime
+        setElapsed(progressBar.current.value)
+        animationRef.current = requestAnimationFrame(whilePlaying) 
+    }
+
     const changeProgress = (e) => {
         audioPlayer.current.currentTime = progressBar.current.value
         setElapsed(progressBar.current.value)
     }
 
-    // Previous and Next 
-    const toggleSkipForward = () => {
+    // useEffect(() => {
+    //   changeProgress()
+    // }, [])
 
-        const index = songs.findIndex(x => x.title == currentSong.title);
+    // Forward and Backward 
+    // const toggleForward = () => {
+    //     audioPlayer.current.currentTime += 10;
+            // timeTravel(Number(progressBar.current.vaue) + 30)
+
+    // }
+    // const toggleBackward = () => {
+//     audioPlayer.current.currentTime -= 10;
+        // timeTravel(Number(progressBar.current.vaue) + 30)
+    // }
+
+    // const toggleSkipForward = () => {
+    //     if(index >= playlist.length - 1) {
+    //         setIndex(0)
+    //         audioPlayer.current.src = playlist[0]
+    //         audioPlayer.current.play()
+    //     } else {
+    //         setIndex(prev => prev + 1)
+    //         audioPlayer.current.src = playlist[index + 1]
+    //         audioPlayer.current.play()
+    //     }
+    // }
+    const toggleSkipForward = () => {
+        // const in
+        // if(index >= songs.length - 1) {
+        //     setIndex(0)
+        //     setCurrentSong(songs[0])
+        //     audioPlayer.current.src = songs[0]
+        //     audioPlayer.current.play()
+        //     // setCurrentSong(songs[0])
+        // } else {
+        //     setIndex(prev => prev + 1)
+        //     setCurrentSong(songs[index + 1])
+        //     // audioPlayer.current.src = songs[index + 1]
+        //     audioPlayer.current.play()
+        //     // setCurrentSong(songs[index + 1])
+        // }
+
+        // audioPlayer.current.currentTime = 0
+        const index = songs.findIndex(x=>x.title == currentSong.title);
 
         if (index == songs.length-1)
         {
@@ -111,7 +178,14 @@ function Play() {
     }
 
     const toggleSkipBackward = () => {
-
+        // if(index > 0) {
+        //     setIndex(prev => prev - 1)
+        //     setCurrentSong(songs[index - 1])
+        //     // audioPlayer.current.src = songs[index -1]
+        //     // setCurrentSong(songs[index - 1])
+        //     audioPlayer.current.play()
+        // }
+        // audioPlayer.current.currentTime = 0
         const index = songs.findIndex(x=>x.title == currentSong.title);
         if (index == 0)
         {
@@ -124,7 +198,7 @@ function Play() {
         audioPlayer.current.currentTime = 0;
     }
 
-    // Ended and Loop
+    // Set if one end next and loop
     useEffect(() => {
       audioPlayer.current.onended = () => {
         toggleSkipForward()
@@ -134,6 +208,8 @@ function Play() {
 
     // onChange 
     const changeVolume = (e) => {
+        // audioPlayer.volume = volumeBar.current.value
+        // setVolume(volumeBar.current.value)
         setVolume(e.target.value)
   
     }
@@ -280,4 +356,4 @@ function Play() {
   )
 }
 
-export default Play
+export default Comment

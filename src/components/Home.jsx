@@ -9,6 +9,7 @@ import artist from '../assets/Artist.svg'
 import man from '../assets/man.svg'
 import lady from '../assets/lady.svg'
 import Release from './Release'
+import Playlist from './Playlist'
 
 function Home() {
   return (
@@ -111,8 +112,9 @@ function Home() {
             </div>
         </div>
 
-        <div className='mt-8 md:px-28'>
+        <div className=' mb-6 md:px-28'>
             {/* <Release /> */}
+            <Playlist />
         </div>
     </div>
   )
