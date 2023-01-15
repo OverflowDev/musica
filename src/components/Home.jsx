@@ -13,7 +13,7 @@ import Playlist from './Playlist'
 
 function Home() {
   return (
-    <div className='h-screen mt-6 ease-in delay-100 duration-300'>
+    <div className='min-h-screen mt-6 ease-in delay-100 duration-300'>
         <div className='flex md:space-x-28'>
             <div>
                 <Sidebar />
@@ -113,8 +113,8 @@ function Home() {
         </div>
 
         <div className=' mb-6 md:px-28'>
-            {/* <Release /> */}
-            <Playlist />
+            <Release />
+            {/* <Playlist /> */}
         </div>
     </div>
   )

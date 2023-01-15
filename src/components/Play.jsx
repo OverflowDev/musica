@@ -4,27 +4,21 @@ import 'rc-slider/assets/index.css';
 
 import {playlist} from '../songs'
 
-import release2 from '../assets/release2.svg'
-
-import lauren from '../assets/audio/lauren.mp3'
-import neon from '../assets/audio/neon.mp3'
-import mavrick from '../assets/audio/mavrick.mp3'
-
-// const playlist = [lauren, neon, mavrick]
 
 function Play() {
+    // Note 
+    // Add a function if a music is clicked, a function that set is Playing to true 
 
     const [songs, setSongs] = useState(playlist)
     // const [index, setIndex] = useState(0)
     const [currentSong, setCurrentSong] = useState(songs[0])
 
-    console.log(playlist.length)
-    // console.log(index)
-    console.log(currentSong.artist)
-
     // states 
     const [isPlaying, setIsPlaying] = useState(false)
     const [isLoop, setIsLoop] = useState(false)
+    const [isShuffle, setIsShuffle] = useState(false)
+
+    // console(isShuffle)
 
     const [volume, setVolume] = useState(50)
     const [mute, setMute] = useState(false)
@@ -97,7 +91,11 @@ function Play() {
     // Previous and Next 
     const toggleSkipForward = () => {
 
-        const index = songs.findIndex(x => x.title == currentSong.title);
+        const index = songs.findIndex(x => x.title == currentSong.title)
+
+        if(isShuffle) {
+            setCurrentSong(~~(Math.random() * songs.length))
+        }
 
         if (index == songs.length-1)
         {
@@ -112,7 +110,12 @@ function Play() {
 
     const toggleSkipBackward = () => {
 
-        const index = songs.findIndex(x=>x.title == currentSong.title);
+        const index = songs.findIndex(x=>x.title == currentSong.title)
+
+        if(isShuffle) {
+            setCurrentSong(~~(Math.random() * songs.length))
+        }
+
         if (index == 0)
         {
           setCurrentSong(songs[songs.length - 1])
@@ -126,23 +129,30 @@ function Play() {
 
     // Ended and Loop
     useEffect(() => {
+
       audioPlayer.current.onended = () => {
+        if(isShuffle) {
+            setCurrentSong(~~(Math.random() * songs.length))
+            toggleSkipForward()
+        }
         toggleSkipForward()
       }
+
+        // Loop 
         audioPlayer.current.loop = isLoop
     })
 
     // onChange 
     const changeVolume = (e) => {
         setVolume(e.target.value)
-  
     }
     
 
 
   return (
-    <div className='fixed bottom-0'>
-        <div className="bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-2">
+    <div className='fixed inset-x-0 bottom-0'>
+        {/* {isPlaying && */}
+        <div className="bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-2 h-full">
             <div className=' flex flex-nowrap items-center justify-around'>
                 {/* Image  */}
                 
@@ -154,7 +164,7 @@ function Play() {
                     </div>
                 </div>
                 {/* Play  */}
-                <div className='flex self-center items-center justify-center md:gap-x-12 gap-4 '>
+                <div className='flex items-center justify-center md:gap-x-12 gap-4 '>
                     {/* Audio  */}
                     <audio 
                         ref={audioPlayer}
@@ -165,10 +175,11 @@ function Play() {
                     ></audio>
                     
                     {/* Shuffle  */}
-                    <button className='lg:block hidden'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                            <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
-                            <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+                    <button className='lg:block hidden' onClick={() => setIsShuffle(!isShuffle)}>
+                       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" className={`w-6 h-6 ${isShuffle ? 'text-white' : ''}`}>
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path d="M18 4l3 3-3 3M18 20l3-3-3-3" />
+                            <path d="M3 7h3a5 5 0 015 5 5 5 0 005 5h5M21 7h-5a4.978 4.978 0 00-2.998.998M9 16.001A4.984 4.984 0 016 17H3" />
                         </svg>
                     </button>
                     {/* Backward  */}
@@ -214,9 +225,15 @@ function Play() {
                         className='lg:block hidden'
                         onClick={() => setIsLoop(!isLoop)}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={`w-6 h-6 ${isLoop ? 'text-red-700' : ''}`}>
-                            <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clipRule="evenodd" />
-                        </svg>
+                        {isLoop ? 
+                                <svg viewBox="0 0 24 24" fill="currentColor" className='w-6 h-6'>
+                                <path d="M13 15V9h-1l-2 1v1h1.5v4m5.5 2H7v-3l-4 4 4 4v-3h12v-6h-2M7 7h10v3l4-4-4-4v3H5v6h2V7z" />
+                              </svg>
+                            :
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className='w-6 h-6'>
+                                <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clipRule="evenodd" />
+                            </svg>
+                        }
                     </button>
                 </div>
                 {/* Volume  */}
@@ -252,9 +269,9 @@ function Play() {
                     </div>
                 </div>
             </div>
-            <div className="flex items-center justify-center py-2">
+            <div className="flex items-center justify-center">
                 <div className='flex items-center justify-center gap-4 w-5/12'>
-                    <div className='text-sm'>
+                    <div className='text-sm text-light'>
                         {calculateTime(elapsed)}
                     </div>
 
@@ -270,12 +287,13 @@ function Play() {
                             onChange={changeProgress}
                         />
                     </div>
-                    <div className='text-sm'>
+                    <div className='text-sm text-light'>
                         {calculateTime(duration)}
                     </div>
                 </div>
             </div>
         </div>
+        {/* // } */}
     </div>
   )
 }
