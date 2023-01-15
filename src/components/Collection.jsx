@@ -7,7 +7,7 @@ import Collection3 from '../assets/collection3.svg'
 
 function Collection() {
   return (
-    <div className=' mt-6 flex md:space-x-28 ease-in delay-100 duration-300'>
+    <div className='px-6 md:px-10 mt-6 flex md:space-x-28 ease-in delay-100 duration-300'>
         <div>
             <Sidebar />
         </div>

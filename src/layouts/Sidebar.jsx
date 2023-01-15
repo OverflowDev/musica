@@ -7,7 +7,7 @@ function Sidebar() {
   const notActive = 'hover:text-gray-700'
 
   return (
-    <div className='fixed space-y-11 md:inline-block hidden'>
+    <div className='fixed mt-8 space-y-11 md:inline-block hidden'>
       <div className="bg-dark-alt text-light flex w-14 flex-col items-center space-y-7 py-6 rounded-full shadow-inner">
         {/* Home  */}
         <NavLink to='/' className={({isActive}) => isActive ? active : notActive }>

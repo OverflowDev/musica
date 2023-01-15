@@ -31,8 +31,8 @@ function Release() {
                         <div className='' key={i}>
                             <div className="group relative max-w-md w-32 h-32 md:w-40 md:h-40 my-4 shadow-sm rounded-lg">
                                 <img src={song.image} alt="Features" className='w-full h-full object-cover rounded-lg' />
-                                <div className="flex-col ">
-                                    <h1 className="text-secondary text-md font-semibold tracking-wider">{song.title}</h1>
+                                <div className="flex-col w-fit">
+                                    <h1 className="text-secondary md:text-md text-sm font-semibold tracking-wider">{song.title}</h1>
                                 </div>
                                 <div className='flex items-center justify-between'>
                                     <h1 className="text-light text-xs">{song.artist}</h1>

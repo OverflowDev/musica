@@ -13,7 +13,7 @@ exports.playlist = [
     },
     {
         "title": 'Million Miracle',
-        "artist": 'Mavrick',
+        "artist": 'Maverick',
         "image": 'https://jesusful.com/wp-content/uploads/2021/06/Elevation-Worship-Million-Little-Miracles-ft-Maverick-City.jpg',
         "url": 'https://www.ceenaija.com/wp-content/uploads/music/2021/03/Maverick_City_-_Million_Little_Miracles_Ft_Elevation_Worship_CeeNaija.com_.mp3'   
     },

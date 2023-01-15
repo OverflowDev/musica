@@ -9,8 +9,10 @@ function Navbar() {
   const closeMenu = () => setOpen(false)
 
   return (
-    <div className='sticky top-0 z-10 '>
-      <nav className='flex items-center gap-x-20 py-3 px-6 md:px-10 bg-main'>
+    <div 
+      // className='sticky top-0 z-10 '
+    >
+      <nav className='flex items-center gap-x-20 py-3 px-6 md:px-10'>
 
         <div className=' z-50 lg:w-auto w-full flex items-center justify-between'>
           <div className='flex items-center'>

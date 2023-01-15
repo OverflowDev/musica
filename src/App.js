@@ -6,7 +6,7 @@ import Play from "./components/Play";
 import Radio from "./components/Radio";
 import Video from "./components/Video";
 import Profile from "./components/Profile";
-import Album from "./components/Album";
+import Album from "./components/album/Album";
 
 import Navbar from './layouts/Navbar'
 // import Sidebar from "./layouts/Sidebar";
@@ -19,17 +19,17 @@ function App() {
         <Router>
             <Navbar />
             
-          <div className="px-6 md:px-10">
+          {/* <div className=""> */}
             <Routes>
               <Route path="/" exact element={<Home />} />
               <Route path="/collection" exact element={<Collection />} />
               <Route path="/radio" exact element={<Radio />} />
               <Route path="/video" exact element={<Video />} />
               <Route path="/profile" exact element={<Profile />} />
-              <Route path="/album/:name" exact element={<Album />} />
+              <Route path="/album" exact element={<Album />} />
               <Route path="/*" exact element={<NotFound />} />
             </Routes>
-          </div>
+          {/* </div> */}
 
           <Play />
 
