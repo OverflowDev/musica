@@ -152,7 +152,7 @@ function Play() {
   return (
     <div className='fixed inset-x-0 bottom-0'>
         {/* {isPlaying && */}
-        <div className="bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-2 h-full">
+        <div className="bg-main bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-2 h-full">
             <div className=' flex flex-nowrap items-center justify-around'>
                 {/* Image  */}
                 

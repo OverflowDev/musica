@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+
+import { BrowserRouter as Router, Routes, Route, 
+  useLocation 
+} from "react-router-dom";
+
 import Collection from "./components/Collection";
 // import { PlaylistProvider } from "./components/context/PlaylistContext";
 import Home from "./components/Home";
@@ -13,23 +18,25 @@ import Navbar from './layouts/Navbar'
 import NotFound from "./components/pages/NotFound";
 
 function App() {
+
   return (
     // <PlaylistProvider>
       <div className="text-gray-400 font-quicksand ">
         <Router>
-            <Navbar />
-            
-          {/* <div className=""> */}
+          {window.location.pathname !== '/album' ?  <Navbar /> : null}
+          {/* <Navbar /> */}
+
+          <div className="">
             <Routes>
               <Route path="/" exact element={<Home />} />
-              <Route path="/collection" exact element={<Collection />} />
-              <Route path="/radio" exact element={<Radio />} />
-              <Route path="/video" exact element={<Video />} />
-              <Route path="/profile" exact element={<Profile />} />
-              <Route path="/album" exact element={<Album />} />
-              <Route path="/*" exact element={<NotFound />} />
+              <Route path="/collection"  element={<Collection />} />
+              <Route path="/radio"  element={<Radio />} />
+              <Route path="/videos"  element={<Video />} />
+              <Route path="/profile"  element={<Profile />} />
+              <Route path="/album"  element={<Album />} />
+              <Route path="/*"  element={<NotFound />} />
             </Routes>
-          {/* </div> */}
+          </div>
 
           <Play />
 

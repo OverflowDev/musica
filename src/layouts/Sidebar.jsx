@@ -15,7 +15,7 @@ function Sidebar() {
             <path d="M12.97 2.59a1.5 1.5 0 00-1.94 0l-7.5 6.363A1.5 1.5 0 003 10.097V19.5A1.5 1.5 0 004.5 21h4.75a.75.75 0 00.75-.75V14h4v6.25c0 .414.336.75.75.75h4.75a1.5 1.5 0 001.5-1.5v-9.403a1.5 1.5 0 00-.53-1.144l-7.5-6.363z" /> 
           </svg>
         </NavLink>
-        {/* Playlist */}
+        {/* COllection */}
         <NavLink to='/collection' className={({isActive}) => isActive ? active : notActive }>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path d="M22 8v3h-5.5v5.11c-1.84.42-3.24 1.98-3.46 3.89H4a2 2 0 01-2-2V6c0-1.11.89-2 2-2h6l2 2h8a2 2 0 012 2m-3.5 5v5.21a2.5 2.5 0 10-1 4.79 2.5 2.5 0 002.5-2.5V15h2v-2h-3.5z" />
@@ -28,7 +28,7 @@ function Sidebar() {
             </svg>
         </NavLink>
         {/* Video  */}
-        <NavLink to='/video' className={({isActive}) => isActive ? active : notActive }>
+        <NavLink to='/videos' className={({isActive}) => isActive ? active : notActive }>
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path d="M9 13V5c0-1.1.9-2 2-2h9c1.1 0 2 .9 2 2v6h-3.43l-1.28-1.74a.14.14 0 00-.24 0L15.06 12c-.06.06-.18.07-.24 0l-1.43-1.75a.152.152 0 00-.23 0l-2.11 2.66c-.08.09-.01.24.11.24h6.34V15H11c-1.11 0-2-.89-2-2m-3 9v-1H4v1H2V2h2v1h2V2h2.39C7.54 2.74 7 3.8 7 5v8c0 2.21 1.79 4 4 4h4.7c-1.03.83-1.7 2.08-1.7 3.5 0 .53.11 1.03.28 1.5H6M4 7h2V5H4v2m0 4h2V9H4v2m0 4h2v-2H4v2m2 4v-2H4v2h2m17-6v2h-2v5.5a2.5 2.5 0 01-5 0 2.5 2.5 0 013.5-2.29V13H23z" />
           </svg>
