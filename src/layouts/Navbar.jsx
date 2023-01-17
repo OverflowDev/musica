@@ -16,7 +16,7 @@ function Navbar() {
 
   return (
     <div 
-      className='sticky top-0 z-10 bg-transparent'
+      // className='sticky top-0 z-10 bg-transparent'
     >
       <nav className='flex items-center gap-x-20 py-3 px-6 md:px-10'>
 

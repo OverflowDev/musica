@@ -34,7 +34,7 @@ function App() {
               <Route path="/radio" exact element={<Radio />} />
               <Route path="/videos" exact element={<Video />} />
               <Route path="/profile" exact element={<Profile />} />
-              <Route path="/album" exact element={<Album />} />
+              <Route path="/album/:id" exact element={<Album />} />
               <Route path="/*" exact element={<NotFound />} />
             </Routes>
           </div>

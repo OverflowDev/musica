@@ -1,4 +1,4 @@
-exports.chart = [
+exports.charts = [
     {
         "id": 1,
         "albumTitle": 'Behold',
