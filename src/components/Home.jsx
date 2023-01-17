@@ -39,7 +39,7 @@ function Home() {
                     <div className='text-white p-10 md:w-4/6 absolute'>
                         <h1 className='text-md'>Curated Playlist</h1>
                         <div className='mt-16 flex-col px-2'>
-                            <h1 className='text-2xl font-bold tracking-widest'>R & B Hits</h1>
+                            <h1 className='text-2xl font-bold tracking-widest'>Gospel Hits</h1>
                             <p className='leading-5 tracking-wide '>All mine, Lie again, Petty call me everyday,Out of time, No love, Bad habit,and so much more</p>
                         </div>
                         <div className="flex items-center space-x-6 mt-14">
@@ -67,7 +67,7 @@ function Home() {
                 </div>
                 {/* Chart  */}
                 <div className='flex flex-col mb-20 space-y-4 md:mt-0 mt-3'>
-                    <h1 className='text-light tracking-wider font-bold'>Top Charts</h1>
+                    <h1 className='text-light tracking-wider font-bold'>Top Songs</h1>
 
                     {charts.map((chart) => {
                         return (

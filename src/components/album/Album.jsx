@@ -27,7 +27,7 @@ function Album() {
     <div className='min-h-screen bg-cover bg-center' style={{ backgroundImage: `url(${data.image})` }}>
         <div 
             // className='w-full bg-gradient-to-b from-blue-800/5 to-dark-alt backdrop-brightness-50 h-screen'
-        className='bg-gradient-to-b from-blue-800/5 to-dark-alt bg-clip-padding backdrop-filter backdrop-blur-md backdrop-brightness-50 bg-opacity-60 h-screen'
+        className='bg-gradient-to-b from-blue-800/5 to-dark-alt bg-clip-padding backdrop-filter backdrop-blur-sm backdrop-brightness-50 bg-opacity-60 h-screen'
         >
             <div>
                 <Navbar />
