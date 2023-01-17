@@ -1,25 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Sidebar from '../layouts/Sidebar'
 
 import Image1 from '../assets/image1.svg'
 import Image2 from '../assets/image2.svg'
 import Wave from '../assets/Wave.svg'
-import WaveMobile from '../assets/WaveMobile.svg'
+// import WaveMobile from '../assets/WaveMobile.svg'
 import artist from '../assets/Artist.svg'
 import man from '../assets/man.svg'
 import lady from '../assets/lady.svg'
 import Release from './Release'
 import Playlist from './Playlist'
+import Navbar from '../layouts/Navbar'
 
 function Home() {
   return (
-    <div className='min-h-screen mt-6 ease-in delay-100 duration-300 px-6 md:px-10'>
+    <div className='min-h-screen ease-in delay-100 duration-300 px-6 md:px-10'>
+        <div>
+            <Navbar />
+        </div>
+        
         <div className='flex md:space-x-28'>
             <div>
                 <Sidebar />
             </div>
 
-            <div className='md:grid lg:grid-cols-2 gap-x-8 w-full '>
+            <div className='md:grid lg:grid-cols-2 gap-x-8 w-full mt-6'>
 
                 <div className="bg-playlist h-96 w-full rounded-2xl relative overflow-hidden">
                     <div className='text-white p-10 md:w-4/6 absolute'>
@@ -55,7 +61,7 @@ function Home() {
                 <div className='flex flex-col mb-20 space-y-4 md:mt-0 mt-3'>
                     <h1 className='text-light tracking-wider font-bold'>Top Charts</h1>
 
-                    <div className='bg-dark-alt md:w-5/6 md:h-24 rounded-2xl md:px-4 px-2'>
+                    <Link to='/album' className='bg-dark-alt md:w-5/6 md:h-24 rounded-2xl md:px-4 px-2'>
                         <div className='flex items-center justify-between'>
                             <div className='flex'>
                                 <img src={Image1} alt="image1" className='object-cover h-24 w-24 md:p-3 p-2' />
@@ -71,7 +77,7 @@ function Home() {
                                 </svg>
                             </button>
                         </div>
-                    </div>
+                    </Link>
                     <div className='bg-dark-alt md:w-5/6 md:h-24 rounded-2xl md:px-4 px-2'>
                         <div className='flex items-center justify-between'>
                             <div className='flex'>

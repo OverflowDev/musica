@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
-import { BrowserRouter as Router, Routes, Route, 
-  useLocation 
+import { useLocation,BrowserRouter as Router, Routes, Route
 } from "react-router-dom";
 
 import Collection from "./components/Collection";
@@ -19,22 +18,24 @@ import NotFound from "./components/pages/NotFound";
 
 function App() {
 
+  // let location = useLocation()
+
   return (
     // <PlaylistProvider>
       <div className="text-gray-400 font-quicksand ">
         <Router>
-          {window.location.pathname !== '/album' ?  <Navbar /> : null}
-          {/* <Navbar /> */}
+          {/* {window.location.pathname !== '/album' ?  <Navbar /> : null} */}
+            {/* <Navbar /> */}
 
           <div className="">
             <Routes>
               <Route path="/" exact element={<Home />} />
-              <Route path="/collection"  element={<Collection />} />
-              <Route path="/radio"  element={<Radio />} />
-              <Route path="/videos"  element={<Video />} />
-              <Route path="/profile"  element={<Profile />} />
-              <Route path="/album"  element={<Album />} />
-              <Route path="/*"  element={<NotFound />} />
+              <Route path="/collection" exact element={<Collection />} />
+              <Route path="/radio" exact element={<Radio />} />
+              <Route path="/videos" exact element={<Video />} />
+              <Route path="/profile" exact element={<Profile />} />
+              <Route path="/album" exact element={<Album />} />
+              <Route path="/*" exact element={<NotFound />} />
             </Routes>
           </div>
 

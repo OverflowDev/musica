@@ -10,17 +10,14 @@ module.exports = {
   ],
   theme: {
     extend: {
-
-      width: {
-        'seek-before-width': '0',
-      },
       colors: {
         ...defaultColors,
         'main': '#1D2123',
         'dark-alt': '#1A1E1F',
         'light': '#EFEEE0',
         'secondary': '#FACD66',
-        'playlist': '#609EAF'
+        'playlist': '#609EAF',
+        'album': '#33373B5E',
       }, 
 
       fontFamily: {

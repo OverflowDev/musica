@@ -4,10 +4,16 @@ import Sidebar from '../layouts/Sidebar'
 import Collection1 from '../assets/collection1.svg'
 import Collection2 from '../assets/collection2.svg'
 import Collection3 from '../assets/collection3.svg'
+import Navbar from '../layouts/Navbar'
 
 function Collection() {
   return (
-    <div className='px-6 md:px-10 mt-6 flex md:space-x-28 ease-in delay-100 duration-300'>
+    <div className='min-h-screen ease-in delay-100 duration-300 px-6 md:px-10'>
+      <div>
+        <Navbar />
+      </div>
+      
+      <div className='flex md:space-x-28 mt-6'>
         <div>
             <Sidebar />
         </div>
@@ -71,6 +77,7 @@ function Collection() {
 
           </div>
         </div>
+      </div>
     </div>
   )
 }
