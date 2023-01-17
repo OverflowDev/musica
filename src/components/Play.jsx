@@ -179,7 +179,7 @@ function Play() {
                     ></audio>
                     
                     {/* Shuffle  */}
-                    <button className='lg:block ' onClick={() => setIsShuffle((prev) => !prev)}>
+                    <button className='lg:block hidden' onClick={() => setIsShuffle((prev) => !prev)}>
                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" className={`w-6 h-6 ${isShuffle ? 'text-white' : ''}`}>
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M18 4l3 3-3 3M18 20l3-3-3-3" />
