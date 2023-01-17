@@ -18,6 +18,9 @@ function Play() {
     const [isLoop, setIsLoop] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
 
+    // const check = Math.floor(Math.random() * songs.length)
+    // console.log(isShuffle)
+
     // console(isShuffle)
 
     const [volume, setVolume] = useState(50)
@@ -91,13 +94,13 @@ function Play() {
     // Previous and Next 
     const toggleSkipForward = () => {
 
-        const index = songs.findIndex(x => x.title == currentSong.title)
+        const index = songs.findIndex(x => x.id == currentSong.id)
 
-        if(isShuffle) {
-            setCurrentSong(~~(Math.random() * songs.length))
-        }
-
-        if (index == songs.length-1)
+        
+        // if(isShuffle) {
+        //     setCurrentSong(~~(Math.random() * songs.length))
+        // }
+        if (index == songs.length - 1)
         {
           setCurrentSong(songs[0])
         }
@@ -110,11 +113,11 @@ function Play() {
 
     const toggleSkipBackward = () => {
 
-        const index = songs.findIndex(x=>x.title == currentSong.title)
+        const index = songs.findIndex(x=>x.id == currentSong.id)
 
-        if(isShuffle) {
-            setCurrentSong(~~(Math.random() * songs.length))
-        }
+        // if(isShuffle) {
+        //     setCurrentSong(~~(Math.random() * songs.length))
+        // }
 
         if (index == 0)
         {
@@ -130,17 +133,18 @@ function Play() {
     // Ended and Loop
     useEffect(() => {
 
+    // if(isShuffle) {
+    //     setCurrentSong(Math.floor(Math.random() * songs.length))
+    // }
       audioPlayer.current.onended = () => {
-        if(isShuffle) {
-            setCurrentSong(~~(Math.random() * songs.length))
             toggleSkipForward()
-        }
-        toggleSkipForward()
+        // toggleSkipForward()
       }
 
         // Loop 
         audioPlayer.current.loop = isLoop
     })
+
 
     // onChange 
     const changeVolume = (e) => {
@@ -175,7 +179,7 @@ function Play() {
                     ></audio>
                     
                     {/* Shuffle  */}
-                    <button className='lg:block hidden' onClick={() => setIsShuffle(!isShuffle)}>
+                    <button className='lg:block ' onClick={() => setIsShuffle((prev) => !prev)}>
                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" className={`w-6 h-6 ${isShuffle ? 'text-white' : ''}`}>
                             <path stroke="none" d="M0 0h24v24H0z" />
                             <path d="M18 4l3 3-3 3M18 20l3-3-3-3" />

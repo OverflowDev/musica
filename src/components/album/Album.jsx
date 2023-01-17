@@ -1,10 +1,13 @@
 import React from 'react'
+
+// import 
+
 import Sidebar from '../../layouts/Sidebar'
+import Navbar from '../../layouts/Navbar'
 
 import collection2 from '../../assets/collection2.svg'
 import image1 from '../../assets/image1.svg'
 
-import Navbar from '../../layouts/Navbar'
 
 function Album() {
   return (
