@@ -15,13 +15,14 @@ import Album from "./components/album/Album";
 import Navbar from './layouts/Navbar'
 // import Sidebar from "./layouts/Sidebar";
 import NotFound from "./components/pages/NotFound";
+import { PlaylistProvider } from "./context/PlaylistContext";
 
 function App() {
 
   // let location = useLocation()
 
   return (
-    // <PlaylistProvider>
+    <PlaylistProvider>
       <div className="text-gray-400 font-quicksand ">
         <Router>
           {/* {window.location.pathname !== '/album' ?  <Navbar /> : null} */}
@@ -43,7 +44,7 @@ function App() {
 
         </Router>
       </div>
-    // </PlaylistProvider>
+    </PlaylistProvider>
   );
 }
 

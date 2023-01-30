@@ -39,7 +39,7 @@ function Navbar() {
             </button>
             {/* Logo  */}
             <Link to='/'>
-              <img src={Logo} alt="Logo" />
+              <img src={Logo} alt="Logo" className='bg-cover' />
             </Link>
           </div>
           {/* Search  */}
@@ -50,7 +50,7 @@ function Navbar() {
           </div> */}
           <div className='md:hidden relative'>
             <input type="search" 
-              className="peer cursor-pointer relative z-10 h-12 w-4 rounded-full border bg-transparent pl-12 outline-none focus:w-56 focus:cursor-text focus:border-playlist focus:pl-16 focus:pr-4 text-light"
+              className="peer cursor-pointer relative z-10 h-12 w-12 rounded-full border bg-transparent pl-12 outline-none focus:w-48 focus:cursor-text focus:border-playlist focus:pl-16 focus:pr-4 text-light"
             />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 
               className="absolute inset-y-0 my-auto h-8 w-12 border-r border-transparent stroke-dark px-3.5 peer-focus:border-playlist peer-focus:stroke-light"

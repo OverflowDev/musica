@@ -1,30 +1,31 @@
-import {useState, useRef, useEffect, useContext} from 'react'
+import {useState, useRef, useEffect} from 'react'
 
-// import {playlist} from '../songs'
+import {playlist} from '../songs'
 
 import PlaylistContext from '../context/PlaylistContext'
 
 
-function Play() {
+function Comment2() {
+    // Note 
+    // Add a function if a music is clicked, a function that set is Playing to true 
 
-    const {
-        songs,
-        // setCurrent,
-        setVolume,
-        currentSong, 
-        volume,
-        togglePlaying,
-        toggleLoop,
-        toggleMute,
-        toggleSkipNext,
-        toggleSkipPrev,
-        isPlaying,
-        isLoop,
-        isMute,
-    } = useContext(PlaylistContext)
+    const [songs, setSongs] = useState(playlist)
+    // const [index, setIndex] = useState(0)
+    const [currentSong, setCurrentSong] = useState(songs[0])
 
-    // States 
+    // states 
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [isLoop, setIsLoop] = useState(false)
     const [isShuffle, setIsShuffle] = useState(false)
+
+    // const check = Math.floor(Math.random() * songs.length)
+    // console.log(isShuffle)
+
+    // console(isShuffle)
+
+    const [volume, setVolume] = useState(50)
+    const [mute, setMute] = useState(false)
+
     const [elapsed, setElapsed] = useState(0)
     const [duration, setDuration] = useState(0)
 
@@ -38,7 +39,7 @@ function Play() {
     useEffect(() => {
 
         if(audioPlayer){
-            audioPlayer.current.volume = volume / 100
+            audioPlayer.current.volume = volume / 100  ;
         }
 
         const seconds = Math.floor(audioPlayer.current.duration)
@@ -46,6 +47,7 @@ function Play() {
         progressBar.current.max = seconds
 
     }, [volume, audioPlayer?.current?.loadedmetadata, audioPlayer?.current?.readyState])
+    // }, [volume, isPlaying])
 
     // Calculate time funcion 
     const calculateTime = (secs) => {
@@ -57,9 +59,14 @@ function Play() {
 
             return `${returnedMinutes}:${returnedSeconds}`
         }
+
         return '00:00'
     }
 
+    // Toggle Play and Pause    
+    const togglePlayPause = () => {
+        setIsPlaying(!isPlaying)
+    }
 
     // WhilePlaying 
     const whilePlaying = () => {
@@ -84,34 +91,80 @@ function Play() {
         setElapsed(progressBar.current.value)
     }
 
-    //toggle Audio
-    // const toggleAudio = () =>{
-    //     audioPlayer.current.paused ? audioPlayer.current.play() : audioPlayer.current.pause()
-    // }
+    // Previous and Next 
+    const toggleSkipForward = () => {
+
+        const index = songs.findIndex(x => x.id == currentSong.id)
+
+        
+        // if(isShuffle) {
+        //     setCurrentSong(~~(Math.random() * songs.length))
+        // }
+        if (index == songs.length - 1)
+        {
+          setCurrentSong(songs[0])
+        }
+        else
+        {
+            setCurrentSong(songs[index + 1])
+        }
+        audioPlayer.current.currentTime = 0;
+    }
+
+    const toggleSkipBackward = () => {
+
+        const index = songs.findIndex(x=>x.id == currentSong.id)
+
+        // if(isShuffle) {
+        //     setCurrentSong(~~(Math.random() * songs.length))
+        // }
+
+        if (index == 0)
+        {
+          setCurrentSong(songs[songs.length - 1])
+        }
+        else
+        {
+          setCurrentSong(songs[index - 1])
+        }
+        audioPlayer.current.currentTime = 0;
+    }
 
     // Ended and Loop
     useEffect(() => {
+
+    // if(isShuffle) {
+    //     setCurrentSong(Math.floor(Math.random() * songs.length))
+    // }
       audioPlayer.current.onended = () => {
-        toggleSkipNext()
+            toggleSkipForward()
+        // toggleSkipForward()
       }
-    // Loop 
-    audioPlayer.current.loop = isLoop
+
+        // Loop 
+        audioPlayer.current.loop = isLoop
     })
+
+
+    // onChange 
+    const changeVolume = (e) => {
+        setVolume(e.target.value)
+    }
     
+
 
   return (
     <div className='fixed inset-x-0 bottom-0'>
+        {/* {isPlaying && */}
         <div className="bg-main bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 border-t border-main w-screen py-2 h-full">
-            <div className='flex flex-nowrap shrink-0 items-center justify-around'>
+            <div className=' flex flex-nowrap items-center justify-around'>
                 {/* Image  */}
                 
-                <div className='flex flex-start items-center space-x-4 text-light duration-400 transition-all ease-in-out'>
-                    <img src={songs[currentSong].image } alt="release" className='h-16 object-cover w-16 rounded-2xl' />
-                    {/* <img src={currentSong.image } alt="release" className='h-16 object-cover w-16 rounded-2xl' /> */}
+                <div className='flex flex-start items-center space-x-4 text-light'>
+                    <img src={currentSong.image } alt="release" className='h-16 object-cover w-16 rounded-2xl' />
                     <div>
-                        <h1 className='text-md font-semibold tracking-wide'>{songs[currentSong].title}</h1>
-                        {/* <h1 className='text-sm'>{currentSong.artist}</h1> */}
-                        <h1 className='text-sm'>{songs[currentSong].artist}</h1>
+                        <h1 className='text-md font-semibold tracking-wide'>{currentSong.title}</h1>
+                        <h1 className='text-sm'>{currentSong.artist}</h1>
                     </div>
                 </div>
                 {/* Play  */}
@@ -119,9 +172,10 @@ function Play() {
                     {/* Audio  */}
                     <audio 
                         ref={audioPlayer}
-                        src={songs[currentSong].url} 
+                        // src="https://www.ceenaija.com/wp-content/uploads/2019/07/Lauren-Daigle-Rescue-CeeNaija.com_.mp3" 
+                        src={currentSong.url} 
                         preload='metadata'
-                        muted={isMute}
+                        muted={mute}
                     ></audio>
                     
                     {/* Shuffle  */}
@@ -132,19 +186,21 @@ function Play() {
                             <path d="M3 7h3a5 5 0 015 5 5 5 0 005 5h5M21 7h-5a4.978 4.978 0 00-2.998.998M9 16.001A4.984 4.984 0 016 17H3" />
                         </svg>
                     </button>
-                    {/* Prev  */}
+                    {/* Backward  */}
+                    {/* <button className='' onClick={toggleBackward}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                            <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
+                        </svg>
+                    </button> */}
                     <button className='' 
-                        onClick={toggleSkipPrev}
+                        onClick={toggleSkipBackward}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                             <path d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z" />
                         </svg>
                     </button>
                     {/* Play and Pause */}
-                    <button className='' onClick={()=> {
-                        togglePlaying()
-                        }}
-                    >
+                    <button className='' onClick={togglePlayPause}>
                         { isPlaying ? 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 text-secondary ">
                                 <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM9 8.25a.75.75 0 00-.75.75v6c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75V9a.75.75 0 00-.75-.75H9zm5.25 0a.75.75 0 00-.75.75v6c0 .414.336.75.75.75H15a.75.75 0 00.75-.75V9a.75.75 0 00-.75-.75h-.75z" clipRule="evenodd" />
@@ -155,9 +211,14 @@ function Play() {
                             </svg>
                         }
                     </button>
-                    {/* Next  */}
+                    {/* Forward  */}
+                    {/* <button className='' onClick={toggleForward}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                            <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
+                        </svg>
+                    </button> */}
                     <button className='' 
-                        onClick={toggleSkipNext}
+                        onClick={toggleSkipForward}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                             <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
@@ -166,7 +227,7 @@ function Play() {
                     {/* Loop  */}
                     <button 
                         className='lg:block hidden'
-                        onClick={toggleLoop}
+                        onClick={() => setIsLoop(!isLoop)}
                     >
                         {isLoop ? 
                                 <svg viewBox="0 0 24 24" fill="currentColor" className='w-6 h-6'>
@@ -181,8 +242,8 @@ function Play() {
                 </div>
                 {/* Volume  */}
                 <div className='hidden lg:flex items-center gap-2'>
-                    <button className='flex items-center transition delay-150 duration-200' onClick={toggleMute}>
-                        {isMute ? 
+                    <button className='flex items-center transition delay-150 duration-200' onClick={() => setMute(!mute)}>
+                        {mute ? 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                                 <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
                             </svg>                                                    
@@ -200,10 +261,14 @@ function Play() {
                     </button>
                     <div className='flex items-center border-3 w-24'>
                         <input 
+                            // ref={volumeBar}
                             type="range" 
                             className='h-1 accent-light rounded-full outline-none'
+                            // min={0} 
+                            // max={100} 
                             value={volume}
-                            onChange={(e) => setVolume(e.target.value)} 
+                            // defaultValue={0}
+                            onChange={changeVolume} 
                         />
                     </div>
                 </div>
@@ -219,6 +284,9 @@ function Play() {
                             ref={progressBar}
                             type="range" 
                             className='md:w-96 w-screen h-1 test rounded-md accent-secondary ring-0 focus:ring-0 outline-none'
+                            // value={elapsed}
+                            // min={0}
+                            // max={duration}  
                             defaultValue={0}
                             onChange={changeProgress}
                         />
@@ -229,8 +297,9 @@ function Play() {
                 </div>
             </div>
         </div>
+        {/* // } */}
     </div>
   )
 }
 
-export default Play
+export default Comment2

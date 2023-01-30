@@ -1,5 +1,7 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import { useParams } from 'react-router-dom'
+
+import PlaylistContext from '../../context/PlaylistContext'
 
 import {charts} from '../../chart'
 
@@ -7,21 +9,25 @@ import {charts} from '../../chart'
 import Sidebar from '../../layouts/Sidebar'
 import Navbar from '../../layouts/Navbar'
 
-import collection2 from '../../assets/collection2.svg'
-import image1 from '../../assets/image1.svg'
-
 
 function Album() {
+
+    // const {album, playlists, setAlbum, c} = useContext(PlaylistContext)
+    const {songs, setCurrent} = useContext(PlaylistContext)
 
     const [data, setData] = useState([])
 
     const params = useParams()
 
     useEffect(() => {
-      setData(charts[params.id - 1])
+
+        setData(charts[params.id - 1])
+
     }, [params.id])
 
-    console.log(data)
+    // const pushSong = () => {
+
+    // }
 
   return (
     <div className='min-h-screen bg-cover bg-center' style={{ backgroundImage: `url(${data.image})` }}>
@@ -78,9 +84,12 @@ function Album() {
                     </div>
 
                     <div className='flex-col space-y-4 mb-28 mt-10'>
-                        {data?.songs?.map((song) => {
+                        {data?.songs?.map((song, i) => {
                             return (
-                                <div className='flex items-center justify-between bg-album md:w-full md:h-16 rounded-lg md:px-4 px-2'>
+                                <div 
+                                    key={i}
+                                    className='flex items-center justify-between hover:bg-dark-alt bg-album md:w-full md:h-16 rounded-lg md:px-4 px-2 cursor-pointer'
+                                >
                                     <div className='flex items-center w-full'>
                                         <img src={song.image} alt="image1" className='rounded-2xl object-cover bg-center h-12 w-12 md:p-1 p-2' />
                                         <div className="md:hidden flex-col">
